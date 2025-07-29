@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   BarChart3, 
   Menu, 
@@ -17,8 +17,14 @@ import {
   Brain
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { SearchBar } from './SearchBar';
+import { NotificationCenter } from './NotificationCenter';
 
-export const Layout: React.FC = () => {
+interface LayoutProps {
+  children: React.ReactNode;
+}
+
+export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
@@ -132,22 +138,12 @@ export const Layout: React.FC = () => {
             </button>
             
             <div className="hidden md:flex items-center space-x-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
-                <input
-                  type="text"
-                  placeholder="Buscar insights, produtos..."
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-64"
-                />
-              </div>
+              <SearchBar />
             </div>
           </div>
 
           <div className="flex items-center space-x-4">
-            <button className="relative text-gray-400 hover:text-gray-600">
-              <Bell size={20} />
-              <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
-            </button>
+            <NotificationCenter />
             
             <div className="flex items-center space-x-2">
               <img
@@ -164,7 +160,7 @@ export const Layout: React.FC = () => {
 
         {/* Page Content */}
         <main className="p-4 lg:p-8">
-          <Outlet />
+          {children}
         </main>
       </div>
 

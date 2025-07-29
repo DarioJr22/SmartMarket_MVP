@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Layout } from '../components/Layout';
 import { useAnalytics } from '../contexts/AnalyticsContext';
+import { SalesChart } from '../components/charts/SalesChart';
+import { ConversionChart } from '../components/charts/ConversionChart';
+import { CategoryChart } from '../components/charts/CategoryChart';
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -285,29 +288,80 @@ export const Dashboard: React.FC = () => {
         </div>
 
         {/* Performance Chart Placeholder */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Sales Chart */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-bold text-gray-900">Vendas e Receita</h2>
+              <div className="flex items-center space-x-4 text-sm">
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                  <span className="text-gray-600">Vendas</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                  <span className="text-gray-600">Receita</span>
+                </div>
+              </div>
+            </div>
+            <SalesChart loading={loading} />
+          </div>
+
+          {/* Conversion Chart */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-bold text-gray-900">Taxa de Conversão</h2>
+              <div className="text-sm text-gray-600">Últimos 20 dias</div>
+            </div>
+            <ConversionChart loading={loading} />
+          </div>
+        </div>
+        {/* Category Distribution */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">Performance dos Últimos 30 Dias</h2>
-            <div className="flex space-x-2">
-              <button className="px-3 py-1 text-sm bg-blue-100 text-blue-600 rounded-lg">
-                Vendas
-              </button>
-              <button className="px-3 py-1 text-sm text-gray-600 hover:bg-gray-100 rounded-lg">
-                Visitas
-              </button>
-              <button className="px-3 py-1 text-sm text-gray-600 hover:bg-gray-100 rounded-lg">
-                Conversão
-              </button>
-            </div>
+            <h2 className="text-xl font-bold text-gray-900">Distribuição por Categoria</h2>
+            <div className="text-sm text-gray-600">Vendas por categoria (%)</div>
           </div>
-          
-          <div className="h-64 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg flex items-center justify-center">
-            <div className="text-center">
-              <BarChart3 className="text-blue-400 mx-auto mb-4" size={48} />
-              <p className="text-gray-600">Gráfico de performance seria exibido aqui</p>
-              <p className="text-sm text-gray-500 mt-2">
-                Integração com biblioteca de gráficos em desenvolvimento
-              </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+            <div>
+              <CategoryChart loading={loading} />
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
+                  <span className="text-sm font-medium text-gray-700">Eletrônicos</span>
+                </div>
+                <span className="text-sm font-bold text-gray-900">45%</span>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                  <span className="text-sm font-medium text-gray-700">Acessórios</span>
+                </div>
+                <span className="text-sm font-bold text-gray-900">30%</span>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="w-4 h-4 bg-yellow-500 rounded-full"></div>
+                  <span className="text-sm font-medium text-gray-700">Celulares</span>
+                </div>
+                <span className="text-sm font-bold text-gray-900">15%</span>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="w-4 h-4 bg-red-500 rounded-full"></div>
+                  <span className="text-sm font-medium text-gray-700">Casa</span>
+                </div>
+                <span className="text-sm font-bold text-gray-900">7%</span>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="w-4 h-4 bg-purple-500 rounded-full"></div>
+                  <span className="text-sm font-medium text-gray-700">Outros</span>
+                </div>
+                <span className="text-sm font-bold text-gray-900">3%</span>
+              </div>
             </div>
           </div>
         </div>
